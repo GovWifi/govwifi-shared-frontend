@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "prepublishOnly": "webpack",
-    "build": "npx webpack build --config ./webpack.config.js --stats verbose && npm pack --pack-destination=./dist"
+    "build": "npx webpack build --config ./webpack.config.js --stats verbose && npm pack --pack-destination=./dist",
+    "postversion": "git push"
   },
   "author": "Stéphane Maniaci <stephane.maniaci@digital.cabinet-office.gov.uk>",
   "license": "MIT",
