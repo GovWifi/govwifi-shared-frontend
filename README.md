@@ -39,40 +39,30 @@ Amend the cookie policy to allow or disable the given
 
 1. Create a branch from the main branch and make any necessary code or library updates.
 
-2. Update the “version” in [`package.json`](https://github.com/govwifi/govwifi-shared-frontend/blob/master/package.json#L3). Additional features or major code changes trigger a major version bump. Dependabot updates are minor release changes. For more information review [semantic versioning docs](https://semver.org/).
-
-3. If you’ve updated any libraries run `npm install`.
+2. If you’ve updated any libraries run `npm install`.
 
     This will update the `package-lock.json` file which also must be committed.
 
-4. Raise a PR. Once approved, merge the PR into the main branch.
+3. Comment and push the code to a feature branch, please note, the comment will be used in the release notes, please **Do Not** start the comment with the version eg 0.6.xx, instead use something like "Bumped xx library to latest version".
 
-### Build release package
+4. don't forget to **Update the artifact version** below.
 
-The release package must be uploaded to GitHub as part of the release process so it can be downloaded by the repos which use `govwifi-shared-frontend`.
+### Update artifact version
 
-1. Run the following from the root project directory:
+After all updates are committed and pushed, update the version with the semantic version (major|minor|patch),
+[For more information review semantic versioning docs](https://semver.org/), eg.
 
     ```bash
-    $ npm run build
+    $ npm version patch
     ```
 
-    This creates a “distribution” folder or `dist`. The `dist` contents are configured via webpack in the [`webpack.config.js`](webpack.config.js) file.
-    Inside this folder will be the generated compressed distribution package,  with a naming structure like, `{name}-{release-version}.tgz`, of the JS code which will need to be
-     upload to GitHub:
+Which will update the version in package.json, which will then be committed and pushed to the branch.
 
+### Release Artifact
 
-### Update Github release version
+1. Raise a Pull Request. Once approved, merge the PR into the main branch.
 
-Navigate to the `govwifi-shared-frontend` ["Releases"](https://github.com/govwifi/govwifi-shared-frontend/releases) page.
-
-Click ["Draft new release"](https://github.com/govwifi/govwifi-shared-frontend/releases/new), then follow the release version process:
-
-1. Under "Choose tag", create a new tag for the release or use an existing tag if it's appropriate.
-2. Use the release version number for the "Release title"
-3. Add a useful description of the changes in the release, including links to Dependabot PRs if applicable.
-4. Click on "Attach binaries by dropping them here or selecting them."
-5. Attach the `govwifi-shared-frontend-{release-version}.tgz` file created earlier, found in the Dist folder.
+2. Once merged the GitHub Action will create a release version and tag for the artifact, to use in the **Update GovWifi repos** step, to update the repos that rely on this artifact.
 
 ### Update GovWifi repos
 
@@ -100,5 +90,33 @@ For each of these projects, complete the following steps:
 
 ## TODO
 
-- [X] add webpack to streamline distribution
 - [ ] add tests
+
+### Manual Release process
+If for any reason it's required to build and release manually, follow these steps
+#### To build release package - manual release process only.
+
+The release package must be uploaded to GitHub as part of the release process so it can be downloaded by the repos which use `govwifi-shared-frontend`.
+
+1. Run the following from the root project directory:
+
+    ```bash
+    $ npm run build
+    ```
+
+    This creates a “distribution” folder or `dist`. The `dist` contents are configured via webpack in the [`webpack.config.js`](webpack.config.js) file.
+    Inside this folder will be the generated compressed distribution package,  with a naming structure like, `{name}-{release-version}.tgz`, of the JS code which will need to be
+     upload to GitHub:
+
+#### Update Github release version - manual release process only.
+
+Navigate to the `govwifi-shared-frontend` ["Releases"](https://github.com/govwifi/govwifi-shared-frontend/releases) page.
+
+Click ["Draft new release"](https://github.com/govwifi/govwifi-shared-frontend/releases/new), then follow the release version process:
+
+1. Under "Choose tag", create a new tag for the release or use an existing tag if it's appropriate.
+2. Use the release version number for the "Release title"
+3. Add a useful description of the changes in the release, including links to Dependabot PRs if applicable.
+4. Click on "Attach binaries by dropping them here or selecting them."
+5. Attach the `govwifi-shared-frontend-{release-version}.tgz` file created earlier, found in the Dist folder.
+

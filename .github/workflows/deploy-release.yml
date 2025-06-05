@@ -1,0 +1,76 @@
+name: Build-Release-Artifact
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+jobs:
+
+  build_release:
+    name: build_release
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup User Env
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+
+      - name: Get version from package.json
+        id: get_version
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Check if tag exists
+        run: |
+          if git rev-parse v${{ steps.get_version.outputs.version }} >/dev/null 2>&1; then
+            echo "Tag v${{ steps.get_version.outputs.version }} already exists, please ensure you have run \"npm version\" before committing"
+          fi
+
+      - name: Create tag
+        run: |
+          git tag -a v${{ steps.get_version.outputs.version }} -m "v${{ steps.get_version.outputs.version }}"
+          git push origin v${{ steps.get_version.outputs.version }}
+
+      - name: Get the last commit message
+        id: get_message
+        run: echo "text=$(git log -1 --grep=^[0-9]\.[0-9] --invert-grep --no-merges --pretty=%B)" >> "$GITHUB_OUTPUT"
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+
+      - name: Install node dependencies
+        run: npm install
+
+      - name: "Build build_release-artifact"
+        run: npm run build
+
+      - name: release
+        uses: softprops/action-gh-release@v2
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          name: ${{ steps.get_version.outputs.version }}
+          tag_name: v${{ steps.get_version.outputs.version }}
+          body: |
+              Changes in this Release ${{ steps.get_version.outputs.version }}
+              - ${{ steps.get_message.outputs.text }}
+
+      - name: upload artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/govwifi-shared-frontend-${{ steps.get_version.outputs.version }}.tgz
+          asset_name: govwifi-shared-frontend-${{ steps.get_version.outputs.version }}.tgz
+          asset_content_type: application/gzip

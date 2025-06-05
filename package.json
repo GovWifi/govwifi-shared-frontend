@@ -1,6 +1,6 @@
 {
   "name": "govwifi-shared-frontend",
-  "version": "0.6.11",
+  "version": "0.6.12",
   "description": "Frontend functionality shared by the GovWifi websites",
   "main": "dist/govwifi-shared-frontend.js",
   "files": [
@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "prepublishOnly": "webpack",
-    "build": "npx webpack build --config ./webpack.config.js --stats verbose && npm pack --pack-destination=./dist"
+    "build": "npx webpack build --config ./webpack.config.js --stats verbose && npm pack --pack-destination=./dist",
+    "postversion": "git push"
   },
   "author": "Stéphane Maniaci <stephane.maniaci@digital.cabinet-office.gov.uk>",
   "license": "MIT",
