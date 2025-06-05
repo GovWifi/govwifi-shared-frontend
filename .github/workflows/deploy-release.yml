@@ -9,6 +9,9 @@ on:
 jobs:
 
   build_release:
+    permissions:
+      contents: write
+
     name: build_release
     runs-on: ubuntu-latest
     steps:
