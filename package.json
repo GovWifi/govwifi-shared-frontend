@@ -1,6 +1,6 @@
 {
   "name": "govwifi-shared-frontend",
-  "version": "0.6.13",
+  "version": "0.6.14",
   "description": "Frontend functionality shared by the GovWifi websites",
   "main": "dist/govwifi-shared-frontend.js",
   "files": [
@@ -15,7 +15,7 @@
   "license": "MIT",
   "devDependencies": {
     "html-loader": "^5.1.0",
-    "webpack": "^5.88.2",
+    "webpack": "^5.105.1",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
