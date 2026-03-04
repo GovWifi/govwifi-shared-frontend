@@ -9,13 +9,14 @@
   "scripts": {
     "prepublishOnly": "webpack",
     "build": "npx webpack build --config ./webpack.config.js --stats verbose && npm pack --pack-destination=./dist",
-    "postversion": "git push"
+    "postversion": "git push",
+    "update-libs": "npm install && npm update && npm audit fix"
   },
   "author": "Stéphane Maniaci <stephane.maniaci@digital.cabinet-office.gov.uk>",
   "license": "MIT",
   "devDependencies": {
     "html-loader": "^5.1.0",
-    "webpack": "^5.105.1",
+    "webpack": "^5.105.4",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
