@@ -120,3 +120,10 @@ Click ["Draft new release"](https://github.com/govwifi/govwifi-shared-frontend/r
 4. Click on "Attach binaries by dropping them here or selecting them."
 5. Attach the `govwifi-shared-frontend-{release-version}.tgz` file created earlier, found in the Dist folder.
 
+### Dependabot
+Dependabots have problems updating the package.json and .lock files, to fix this manually check out the repo, ensure you have node and npm installed and run
+```
+npm update-libs
+```
+commit and push.
+Follow the rest of the deployment instructions.
