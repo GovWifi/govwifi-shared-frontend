@@ -20,7 +20,7 @@
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
-    "js-cookie": "^3.0.5"
+    "js-cookie": "^3.0.7"
   },
   "engines": {
     "node": ">=18.17.0",
