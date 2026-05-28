@@ -7,24 +7,22 @@ on:
       - master
 
 jobs:
-
   build_artifact:
     name: build_artifact
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout source code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
-    - name: Checkout source code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
 
-    - name: Setup node
-      uses: actions/setup-node@v4
-      with:
-        node-version: 'latest'
+      - name: Install node dependencies
+        run: npm install
 
-    - name: Install node dependencies
-      run: npm install
-
-    - name: "Build build_release-artifact"
-      run: npm run build
+      - name: "Build build_release-artifact"
+        run: npm run build
