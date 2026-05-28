@@ -7,7 +7,6 @@ on:
       - master
 
 jobs:
-
   build_release:
     permissions:
       contents: write
@@ -15,9 +14,8 @@ jobs:
     name: build_release
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout source code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -48,7 +46,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 'latest'
+          node-version: "latest"
 
       - name: Install node dependencies
         run: npm install
@@ -65,8 +63,8 @@ jobs:
           name: ${{ steps.get_version.outputs.version }}
           tag_name: v${{ steps.get_version.outputs.version }}
           body: |
-              Changes in this Release ${{ steps.get_version.outputs.version }}
-              - ${{ steps.get_message.outputs.text }}
+            Changes in this Release ${{ steps.get_version.outputs.version }}
+            - ${{ steps.get_message.outputs.text }}
 
       - name: upload artifact
         uses: actions/upload-release-asset@v1
