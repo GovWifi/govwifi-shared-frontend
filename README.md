@@ -126,4 +126,4 @@ Dependabots have problems updating the package.json and .lock files, to fix this
 npm update-libs
 ```
 commit and push.
-Follow the rest of the deployment instructions.
+Follow the rest of the deployment instructions...
