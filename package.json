@@ -16,7 +16,7 @@
   "license": "MIT",
   "devDependencies": {
     "html-loader": "^5.1.0",
-    "webpack": "^5.110.3",
+    "webpack": "^5.111.0",
     "webpack-cli": "^7.2.3"
   },
   "dependencies": {
